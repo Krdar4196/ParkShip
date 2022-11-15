@@ -6,24 +6,24 @@
         android:enabled="true"
         android:icon="@drawable/common_google_signin_btn_icon_dark"
         app:showAsAction="ifRoom"
-        android:title="サンプル1"/>
+        android:title="マップ"/>
     <item
         android:id="@+id/menu2"
         android:enabled="true"
         android:icon="@drawable/ic_launcher_background"
         app:showAsAction="ifRoom"
-        android:title="サンプル2"/>
+        android:title="検索"/>
     <item
         android:id="@+id/menu3"
         android:enabled="true"
         android:icon="@drawable/ic_launcher_foreground"
         app:showAsAction="ifRoom"
-        android:title="サンプル3"/>
+        android:title="マイページ"/>
     <item
         android:id="@+id/menu4"
         android:enabled="true"
         android:icon="@color/design_default_color_secondary_variant"
         app:showAsAction="ifRoom"
-        android:title="サンプル4"/>
+        android:title="設定"/>
 
 </menu>
