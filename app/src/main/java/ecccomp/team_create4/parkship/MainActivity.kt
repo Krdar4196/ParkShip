@@ -23,10 +23,10 @@ class MainActivity : AppCompatActivity() {
             //マップ
             R.id.menu1 -> {
                 /** エラー起こるのでコメントアウトしてます **/
-//                supportFragmentManager.beginTransaction()
-//                    .replace(R.id.frameLayout, map())
-//                    .commit()
-//                return@OnNavigationItemSelectedListener true
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.frameLayout, map())
+                    .commit()
+                return@OnNavigationItemSelectedListener true
             }
             //検索
             R.id.menu2 -> {
