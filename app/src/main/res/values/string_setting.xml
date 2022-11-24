@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="list_setting">
+        <item>とり</item>
+        <item>しか</item>
+        <item>ぞう</item>
+        <item>きつね</item>
+        <item>かば</item>
+        <item>ライオン</item>
+        <item>パンダ</item>
+        <item>ひつじ</item>
+    </string-array>
+</resources>
