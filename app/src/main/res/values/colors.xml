@@ -7,4 +7,26 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- 追加 -->
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorDarkBlue">#0000AA</color>
+    <color name="colorDarkGreen">#00AA00</color>
+    <color name="colorDarkAqua">#00AAAA</color>
+    <color name="colorDarkRed">#AA0000</color>
+    <color name="colorDarkPurple">#AA00AA</color>
+    <color name="colorGold">#FFAA00</color>
+    <color name="colorGray">#AAAAAA</color>
+    <color name="colorDarkGray">#555555</color>
+    <color name="colorBlue">#5555FF</color>
+    <color name="colorGreen">#55FF55</color>
+    <color name="colorAqua">#55FFFF</color>
+    <color name="colorRed">#FF5555</color>
+    <color name="colorLightPurple">#FF55FF</color>
+    <color name="colorYellow">#FFFF55</color>
+    <color name="colorWhite">#FFFFFF</color>
+
 </resources>
