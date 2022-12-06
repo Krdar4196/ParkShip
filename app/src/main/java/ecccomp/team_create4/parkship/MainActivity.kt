@@ -15,6 +15,12 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId){
             R.id.menu1 -> {
                 supportFragmentManager.beginTransaction()
+                    .replace(R.id.frameLayout, map())
+                    .commit()
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.menu2 -> {
+                supportFragmentManager.beginTransaction()
                     .replace(R.id.frameLayout, ExampleFragment())
                     .commit()
                 return@OnNavigationItemSelectedListener true
