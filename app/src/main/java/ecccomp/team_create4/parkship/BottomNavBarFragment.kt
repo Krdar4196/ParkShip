@@ -34,7 +34,7 @@ class BottomNavBarFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.activity_main, container, false)
+        return inflater.inflate(R.layout.fragment_bottom_nav_bar, container, false)
     }
 
     companion object {
