@@ -13,6 +13,7 @@ class MainActivity : AppCompatActivity() {
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId){
+            //
             R.id.menu1 -> {
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.frameLayout, map())
