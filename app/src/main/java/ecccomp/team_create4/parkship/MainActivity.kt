@@ -16,27 +16,37 @@ class MainActivity : AppCompatActivity() {
             //マップ画面
             R.id.menu1 -> {
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.frameLayout, ExampleFragment())
+                    .replace(R.id.frameLayout, map())
                     .commit()
                 return@OnNavigationItemSelectedListener true
             }
-            //検索画面
+            //マイページ画面
             R.id.menu2 -> {
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.frameLayout, map())
+                    .replace(R.id.frameLayout, SearchFragment())
                     .commit()
                 return@OnNavigationItemSelectedListener true
             }
             //フレンド画面
             R.id.menu3 -> {
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.frameLayout, SettingFragment())
+                    .replace(R.id.frameLayout, FriendFragment())
                     .commit()
                 return@OnNavigationItemSelectedListener true
             }
             //設定画面
             R.id.menu4 -> {
-
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.frameLayout, MyPageFragment())
+                    .commit()
+                return@OnNavigationItemSelectedListener true
+            }
+            //設定画面
+            R.id.menu5 -> {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.frameLayout, SettingFragment())
+                    .commit()
+                return@OnNavigationItemSelectedListener true
             }
 
         }
