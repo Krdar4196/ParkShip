@@ -29,7 +29,10 @@ class MainActivity : AppCompatActivity() {
             }
             //フレンド画面
             R.id.menu3 -> {
-
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.frameLayout, SettingFragment())
+                    .commit()
+                return@OnNavigationItemSelectedListener true
             }
             //設定画面
             R.id.menu4 -> {
