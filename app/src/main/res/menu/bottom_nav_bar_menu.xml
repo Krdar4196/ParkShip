@@ -18,9 +18,15 @@
         android:enabled="true"
         android:icon="@drawable/ic_launcher_foreground"
         app:showAsAction="ifRoom"
-        android:title="フレンド"/>
+        android:title="マイページ"/>
     <item
         android:id="@+id/menu4"
+        android:enabled="true"
+        android:icon="@drawable/ic_launcher_foreground"
+        app:showAsAction="ifRoom"
+        android:title="フレンド"/>
+    <item
+        android:id="@+id/menu5"
         android:enabled="true"
         android:icon="@color/design_default_color_secondary_variant"
         app:showAsAction="ifRoom"
