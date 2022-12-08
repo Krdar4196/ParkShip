@@ -13,21 +13,29 @@ class MainActivity : AppCompatActivity() {
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId){
+            //マップ画面
             R.id.menu1 -> {
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.frameLayout, ExampleFragment())
                     .commit()
                 return@OnNavigationItemSelectedListener true
             }
+            //検索画面
             R.id.menu2 -> {
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.frameLayout, map())
                     .commit()
                 return@OnNavigationItemSelectedListener true
             }
+            //フレンド画面
             R.id.menu3 -> {
 
             }
+            //設定画面
+            R.id.menu4 -> {
+
+            }
+
         }
         return@OnNavigationItemSelectedListener false
     }
