@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "914553233787",
+    "firebase_url": "https://test-a6ccd-default-rtdb.firebaseio.com",
+    "project_id": "test-a6ccd",
+    "storage_bucket": "test-a6ccd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:914553233787:android:7936e44fde4f79a5305dde",
+        "android_client_info": {
+          "package_name": "ecccomp.team_create4.parkship"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "914553233787-3igc28encngptv5lc7vsp7a79evlch4n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwbYZq5MM9rjD7oNl8Y0SHx_q774NXyIQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "914553233787-3igc28encngptv5lc7vsp7a79evlch4n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
