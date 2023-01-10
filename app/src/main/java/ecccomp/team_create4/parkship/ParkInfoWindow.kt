@@ -4,9 +4,11 @@ import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Marker
+import com.google.common.collect.MapMaker
 
 class ParkInfoWindow(private val context: Context) : GoogleMap.InfoWindowAdapter {
     override fun getInfoContents(marker: Marker): View? {
