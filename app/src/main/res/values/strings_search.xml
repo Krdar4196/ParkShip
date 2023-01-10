@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="searchViewhint">公園をさがす</string>
+    <string name="searchTitletextviewtext">検索</string>
+    <string name="searchResetbuttontext">リセット</string>
+    <string name="searchDecisionbuttontext">この条件で検索</string>
+    <string name="searchKeywordtextviewtext">キーワードでさがす</string>
+    <string name="searchKeywordedittexthint">公園の名前やエリアで検索できます</string>
+    <string name="searchAddresstextviewtext">住所でさがす</string>
+    <string name="searchPrefecturestextviewtext">都道府県</string>
+    <string name="searchCitystextviewtext">市</string>
 </resources>

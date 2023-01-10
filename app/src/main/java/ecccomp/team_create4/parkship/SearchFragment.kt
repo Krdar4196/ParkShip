@@ -26,7 +26,6 @@ class SearchFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
@@ -39,17 +38,6 @@ class SearchFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val screen1 = inflater.inflate(R.layout.fragment_search, container, false)
-
-        val searchListview: ListView = screen1.findViewById(R.id.searchListview)
-
-        val arrayTitle = arrayOf("フレンドの通報ピンのみ表示","通報ピンをフレンドのみに表示","利用規約")
-
-        val adapter = ArrayAdapter(
-            requireContext(),
-            android.R.layout.simple_list_item_1,
-            arrayTitle
-        )
-        searchListview.adapter = adapter
         return screen1
     }
 
