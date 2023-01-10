@@ -129,7 +129,9 @@ class map : Fragment(), OnMapReadyCallback {
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
 
         mMap.setOnInfoWindowClickListener {
-
+            childFragmentManager.beginTransaction()
+                .replace(R.id.container, ParkDetailFragment())
+                .commit()
         }
 
     }
