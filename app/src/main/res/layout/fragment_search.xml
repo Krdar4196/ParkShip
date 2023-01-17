@@ -8,26 +8,77 @@
     android:orientation="vertical"
     tools:context=".SearchFragment">
 
-
-    <SearchView
-        android:id="@+id/searchView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:queryHint="@string/searchViewhint"/>
-
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
         <LinearLayout
             android:id="@+id/layout1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <ListView
-                android:id="@+id/searchListview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </ListView>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/searchtitleTextview"
+                android:textSize="30sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/searchTitletextviewtext">
+            </TextView>
+            <Button
+                android:id="@+id/searchresetButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:text="@string/searchResetbuttontext"/>
+            <Button
+                android:id="@+id/searchdecisionButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:text="@string/searchDecisionbuttontext"/>
         </LinearLayout>
     </FrameLayout>
+    <TextView
+        android:id="@+id/searchkeywordTextview"
+        android:textSize="25sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/searchKeywordtextviewtext">
+    </TextView>
+    <EditText
+        android:id="@+id/searchkeywordEdittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/searchKeywordedittexthint"/>
+    <TextView
+        android:id="@+id/searchaddressTextview"
+        android:textSize="25sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/searchAddresstextviewtext">
+    </TextView>
+    <TextView
+        android:id="@+id/searchprefecturesTextview"
+        android:textSize="22sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/searchPrefecturestextviewtext">
+    </TextView>
+    <Spinner
+        android:id="@+id/searchprefecturesSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/searchcitysTextview"
+        android:textSize="22sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/searchCitystextviewtext">
+    </TextView>
+    <Spinner
+        android:id="@+id/searchcitysSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 </LinearLayout>

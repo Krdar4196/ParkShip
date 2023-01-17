@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.ListView
+import android.widget.Spinner
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,7 +28,6 @@ class SearchFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
@@ -40,16 +41,23 @@ class SearchFragment : Fragment() {
         // Inflate the layout for this fragment
         val screen1 = inflater.inflate(R.layout.fragment_search, container, false)
 
-        val searchListview: ListView = screen1.findViewById(R.id.searchListview)
+        // Spinnerの取得
+        val searchprefecturesSpinner:Spinner = screen1.findViewById(R.id.searchprefecturesSpinner)
+        val searchcitysSpinner:Spinner = screen1.findViewById(R.id.searchcitysSpinner)
 
-        val arrayTitle = arrayOf("フレンドの通報ピンのみ表示","通報ピンをフレンドのみに表示","利用規約")
+        // Adapterの生成
+        val searchprefecturesadapter = ArrayAdapter.createFromResource(requireActivity(), R.array.spinnerItems, android.R.layout.simple_spinner_item)
+        val searchcitysadapter = ArrayAdapter.createFromResource(requireActivity(), R.array.spinnerItems, android.R.layout.simple_spinner_item)
 
-        val adapter = ArrayAdapter(
-            requireContext(),
-            android.R.layout.simple_list_item_1,
-            arrayTitle
-        )
-        searchListview.adapter = adapter
+        // 選択肢の各項目のレイアウト
+        searchprefecturesadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        searchcitysadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        // AdapterをSpinnerのAdapterとして設定
+        searchprefecturesSpinner.adapter = searchprefecturesadapter
+        searchcitysSpinner.adapter = searchprefecturesadapter
+        searchcitysSpinner.isClickable = false
+
         return screen1
     }
 
