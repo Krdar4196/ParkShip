@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.ListView
+import android.widget.Spinner
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -38,6 +40,24 @@ class SearchFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val screen1 = inflater.inflate(R.layout.fragment_search, container, false)
+
+        // Spinnerの取得
+        val searchprefecturesSpinner:Spinner = screen1.findViewById(R.id.searchprefecturesSpinner)
+        val searchcitysSpinner:Spinner = screen1.findViewById(R.id.searchcitysSpinner)
+
+        // Adapterの生成
+        val searchprefecturesadapter = ArrayAdapter.createFromResource(requireActivity(), R.array.spinnerItems, android.R.layout.simple_spinner_item)
+        val searchcitysadapter = ArrayAdapter.createFromResource(requireActivity(), R.array.spinnerItems, android.R.layout.simple_spinner_item)
+
+        // 選択肢の各項目のレイアウト
+        searchprefecturesadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        searchcitysadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        // AdapterをSpinnerのAdapterとして設定
+        searchprefecturesSpinner.adapter = searchprefecturesadapter
+        searchcitysSpinner.adapter = searchprefecturesadapter
+        searchcitysSpinner.isClickable = false
+
         return screen1
     }
 
