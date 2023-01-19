@@ -48,7 +48,6 @@ class MainActivity : AppCompatActivity() {
                     .commit()
                 return@OnNavigationItemSelectedListener true
             }
-
         }
         return@OnNavigationItemSelectedListener false
     }
