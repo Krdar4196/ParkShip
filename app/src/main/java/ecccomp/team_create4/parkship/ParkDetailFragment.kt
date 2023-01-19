@@ -43,15 +43,48 @@ class ParkDetailFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        /*
         super.onViewCreated(view, savedInstanceState)
         val parkdetailNametext: TextView = view.findViewById(R.id.parkdetailNametext)
         val parkdetailAddresstext: TextView = view.findViewById(R.id.parkdetailAddresstext)
         val parkdetailReporttext: TextView = view.findViewById(R.id.parkdetailReporttext)
         val parkdetailReportbutton: Button = view.findViewById(R.id.parkdetailReportbutton)
+
+        //ここからbundle
+        val reportCount = 1//送信内容
+        val bundle = Bundle()
+        val fragment = ReportcommentFragment()
+        bundle.putString("BUNDLE_REPORT_COUNT",reportCount.toString())//送信内容入力
+        fragment.arguments = bundle
+        parkdetailReporttext.setText("通報回数:" + reportCount + "回")
         // ボタンのリスナーを作成
         parkdetailReportbutton.setOnClickListener {
-            childFragmentManager.beginTransaction()
+            parentFragmentManager.beginTransaction()
+                .add(R.id.container,fragment)//送信内容付加
+                .commit()
+        }
+        //ここまでbundle
+        */
+
+        super.onViewCreated(view, savedInstanceState)
+        val parkdetailNametext: TextView = view.findViewById(R.id.parkdetailNametext)
+        val parkdetailAddresstext: TextView = view.findViewById(R.id.parkdetailAddresstext)
+        val parkdetailReporttext: TextView = view.findViewById(R.id.parkdetailReporttext)
+        /*bundle実験
+        val reportCount = 1
+        val bundle = Bundle()
+        val fragment = ReportcommentFragment()
+        bundle.putString("BUNDLE_REPORT_COUNT",reportCount.toString())
+        fragment.arguments = bundle//実験
+        parkdetailReporttext.setText("通報回数:" + reportCount + "回")
+         */
+        val parkdetailReportbutton: Button = view.findViewById(R.id.parkdetailReportbutton)
+        // ボタンのリスナーを作成
+        parkdetailReportbutton.setOnClickListener {
+            parentFragmentManager.beginTransaction()
                 .replace(R.id.container,ReportcommentFragment())
+                //.add(R.id.container,fragment)//実験
                 .commit()
         }
     }
