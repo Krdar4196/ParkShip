@@ -1,10 +1,15 @@
 package ecccomp.team_create4.parkship
 
 import android.os.Bundle
+import android.text.TextUtils.replace
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
+import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.ReportFragment
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,6 +40,53 @@ class ParkDetailFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_park_detail, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        /*
+        super.onViewCreated(view, savedInstanceState)
+        val parkdetailNametext: TextView = view.findViewById(R.id.parkdetailNametext)
+        val parkdetailAddresstext: TextView = view.findViewById(R.id.parkdetailAddresstext)
+        val parkdetailReporttext: TextView = view.findViewById(R.id.parkdetailReporttext)
+        val parkdetailReportbutton: Button = view.findViewById(R.id.parkdetailReportbutton)
+
+        //ここからbundle
+        val reportCount = 1//送信内容
+        val bundle = Bundle()
+        val fragment = ReportcommentFragment()
+        bundle.putString("BUNDLE_REPORT_COUNT",reportCount.toString())//送信内容入力
+        fragment.arguments = bundle
+        parkdetailReporttext.setText("通報回数:" + reportCount + "回")
+        // ボタンのリスナーを作成
+        parkdetailReportbutton.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .add(R.id.container,fragment)//送信内容付加
+                .commit()
+        }
+        //ここまでbundle
+        */
+
+        super.onViewCreated(view, savedInstanceState)
+        val parkdetailNametext: TextView = view.findViewById(R.id.parkdetailNametext)
+        val parkdetailAddresstext: TextView = view.findViewById(R.id.parkdetailAddresstext)
+        val parkdetailReporttext: TextView = view.findViewById(R.id.parkdetailReporttext)
+        /*bundle実験
+        val reportCount = 1
+        val bundle = Bundle()
+        val fragment = ReportcommentFragment()
+        bundle.putString("BUNDLE_REPORT_COUNT",reportCount.toString())
+        fragment.arguments = bundle//実験
+        parkdetailReporttext.setText("通報回数:" + reportCount + "回")
+         */
+        val parkdetailReportbutton: Button = view.findViewById(R.id.parkdetailReportbutton)
+        // ボタンのリスナーを作成
+        parkdetailReportbutton.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.container,ReportcommentFragment())
+                //.add(R.id.container,fragment)//実験
+                .commit()
+        }
     }
 
     companion object {
