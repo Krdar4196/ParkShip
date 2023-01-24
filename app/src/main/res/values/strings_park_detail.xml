@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="parkdetailParknametextviewtext">公園名</string>
+    <string name="parkdetailParkaddresstextviewtext">住所:</string>
+    <string name="parkdetailReporttextviewtext">通報回数:</string>
+    <string name="parkdetailReportbuttontext">通報</string>
+    <string name="parkdetailCommentbuttontext">コメント</string>
+</resources>
