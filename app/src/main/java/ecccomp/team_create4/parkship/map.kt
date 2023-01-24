@@ -27,7 +27,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
-private val ARR_MAX: Int = 10
+private val ARR_MAX: Int = 3
 
 class map : Fragment(), OnMapReadyCallback, LocationListener {
 
@@ -43,6 +43,12 @@ class map : Fragment(), OnMapReadyCallback, LocationListener {
     var nowMarker: Marker? = null
 
     private var Park_LatLng: ArrayList<LatLng> = ArrayList()
+    private var Park_ID: ArrayList<String> = ArrayList()
+    private var Park_Address: ArrayList<String> = ArrayList()
+    private var Park_Name: ArrayList<String> = ArrayList()
+
+    //公園詳細画面に送るデータ
+    private var Park_Bundle: Bundle = Bundle()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,9 +67,10 @@ class map : Fragment(), OnMapReadyCallback, LocationListener {
                 val post = dataSnapshot.value
 
                 val dbdata = database.child("ksj:Dataset").child("gml:Point")
+                val dbdatail = database.child("ksj:Dataset").child("ksj:Park")
 
                 for (i in 0..ARR_MAX){
-                    dbdata.child("$i").child("gml:pos").child("0").get()
+                    dbdata.child("$i").child("gml:pos").get()
                         .addOnSuccessListener {
                             val ltString = it.value as String
                             val Park_String = ltString.split(" ") as ArrayList<String>
@@ -73,6 +80,19 @@ class map : Fragment(), OnMapReadyCallback, LocationListener {
                             if (i == ARR_MAX){
                                 MarkerInput()
                             }
+                        }
+                    dbdatail.child("$i").get()
+                        .addOnSuccessListener {
+                            val ParkData: HashMap<String, ArrayList<String>> = it.value as HashMap<String, ArrayList<String>>
+                            Log.d("firemap", "ID : ${ParkData.get("-gml:id")}")
+                            Park_ID.add(ParkData.get("-gml:id").toString())
+                            Log.d("firemap", "住所 : ${ParkData.get("ksj:pop")} ${ParkData.get("ksj:cop")}")
+                            Park_Address.add("${ParkData.get("ksj:pop").toString()} ${ParkData.get("ksj:cop").toString()}")
+                            Log.d("firemap", "公園名 : ${ParkData.get("ksj:nop")}")
+                            Park_Name.add(ParkData.get("ksj:nop").toString())
+
+                            //Log.d("firemap", "metadata : ${it.value!!::class.simpleName}")
+                            //Log.d("firemap", "metadata : ${it.value}")
                         }
                 }
             }
@@ -113,8 +133,33 @@ class map : Fragment(), OnMapReadyCallback, LocationListener {
 
         //マーカーの詳細をタップした時の処理
         mMap.setOnInfoWindowClickListener {
+            var fragment = ParkDetailFragment()
+
+            Log.d("firemap", "click_id : ${it.id.removePrefix("m")}")
+
+            val id = it.id.removePrefix("m")
+
+            Log.d("firemap", "detail : ${Park_ID.get(id.toInt())}, ${Park_Address.get(id.toInt())}, ${Park_Name.get(id.toInt())}")
+
+            Park_Bundle.putString("id", Park_ID.get(id.toInt()))
+            Park_Bundle.putString("address", Park_Address.get(id.toInt()))
+            Park_Bundle.putString("name", Park_Name.get(id.toInt()))
+
+            fragment.setArguments(Park_Bundle)
+
+
+            val postListener = object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {
+                    // Getting Post failed, log a message
+                    Log.w(ContentValues.TAG, "loadPost:onCancelled", databaseError.toException())
+                }
+            }
+
             childFragmentManager.beginTransaction()
-                .replace(R.id.container, ParkDetailFragment())
+                .replace(R.id.container, fragment)
                 .commit()
         }
     }
