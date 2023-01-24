@@ -40,10 +40,7 @@ class ReportcommentFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val args = arguments?.getString("BUNDLE_REPORT_COUNT")
-        val reportcommentReportcounttext: TextView = view.findViewById(R.id.reportcommentReportcounttext)
-        reportcommentReportcounttext.setText("通報回数:" + args)
     }
 
     companion object {

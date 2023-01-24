@@ -10,13 +10,6 @@
     tools:context=".ParkDetailFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/parkdetailNametext"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/parkdetailParknametextviewtext"
-        android:textSize="32dp"/>
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -26,22 +19,30 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
-                android:id="@+id/parkdetailAddresstext"
+                android:id="@+id/parkdetailNametext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/parkdetailParkaddresstextviewtext"
-                android:textSize="24dp" />
+                android:text="@string/parkdetailParknametextviewtext"
+                android:textSize="30sp"/>
+            <Button
+                android:id="@+id/parkdetailReportbutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:text="@string/parkdetailReportbuttontext" />
         </LinearLayout>
     </FrameLayout>
+    <TextView
+        android:id="@+id/parkdetailAddresstext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/parkdetailParkaddresstextviewtext"
+        android:textSize="25sp" />
     <TextView
         android:id="@+id/parkdetailReporttext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/parkdetailReporttextviewtext"
-        android:textSize="24dp" />
-    <Button
-        android:id="@+id/parkdetailReportbutton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/parkdetailReportbuttontext" />
+        android:textSize="25sp" />
+
 </LinearLayout>
