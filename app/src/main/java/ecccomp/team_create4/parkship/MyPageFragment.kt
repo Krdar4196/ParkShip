@@ -24,4 +24,10 @@ class MyPageFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
     }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        setHasOptionsMenu(true)
+        requireActivity().title = "マイページ"
+    }
 }
