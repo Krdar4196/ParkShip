@@ -13,7 +13,6 @@ import com.google.common.collect.MapMaker
 class ParkInfoWindow(private val context: Context) : GoogleMap.InfoWindowAdapter {
     override fun getInfoContents(marker: Marker): View? {
         val view: View = (context as Activity).layoutInflater.inflate(R.layout.infowindow_park, null)
-
         val tvTitle = view.findViewById<View>(R.id.tvTitle) as TextView
         val tvSnippet = view.findViewById<View>(R.id.tvSnippet) as TextView
 
