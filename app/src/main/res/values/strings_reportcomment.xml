@@ -3,4 +3,5 @@
     <string name="reportcommentReporttitletext">通報</string>
     <string name="reportcommentReportbuttontext">この内容で通報する</string>
     <string name="reportcommentParknametext">公園名</string>
+    <string name="reportcommentReportcontenthint">公園の器具などの損傷や危険な場所を通報</string>
 </resources>

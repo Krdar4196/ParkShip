@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -40,7 +42,26 @@ class ReportcommentFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val args = arguments?.getString("BUNDLE_REPORT_COUNT")
+
+        val reportcommentNametext : TextView = view.findViewById(R.id.reportcommentparknameTextview)
+        val reportcommentReportbutton : Button = view.findViewById(R.id.reportcommentReportbutton)
+        val reportcommentReportcontentEdittext : TextView = view.findViewById(R.id.reportcommentReportcontentEdittext)
+
+        val parkreportcommentbundle = arguments
+        var parkid:Int? = 0
+        var parkname:String? = null
+
+        if (parkreportcommentbundle != null){
+            parkid = parkreportcommentbundle.getInt("id")
+            parkname = parkreportcommentbundle.getString("name")
+            reportcommentNametext.setText(parkname)
+        }
+
+        reportcommentReportbutton.setOnClickListener {
+            reportcommentReportcontentEdittext.setText("")
+            val toast = Toast.makeText(requireActivity(), "送信しました。", Toast.LENGTH_LONG)
+            toast.show()
+        }
     }
 
     companion object {

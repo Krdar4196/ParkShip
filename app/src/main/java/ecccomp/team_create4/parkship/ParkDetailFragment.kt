@@ -43,17 +43,37 @@ class ParkDetailFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
         super.onViewCreated(view, savedInstanceState)
+
         val parkdetailNametext: TextView = view.findViewById(R.id.parkdetailNametext)
         val parkdetailAddresstext: TextView = view.findViewById(R.id.parkdetailAddresstext)
         val parkdetailReporttext: TextView = view.findViewById(R.id.parkdetailReporttext)
         val parkdetailReportbutton: Button = view.findViewById(R.id.parkdetailReportbutton)
+
+        val parkdetailbundle = arguments
+        var parkid:Int? = 0
+        var parkname:String? = null
+        var parkaddress:String? = null
+        var parkReportcount:Int? = 1
+
+        if (parkdetailbundle != null){
+            parkid = parkdetailbundle.getInt("id")
+            parkname = parkdetailbundle.getString("name")
+            parkaddress = parkdetailbundle.getString("address")
+            parkdetailNametext.setText(parkname)
+            parkdetailAddresstext.setText("住所:" + parkaddress)
+            parkdetailReporttext.setText("通報件数:" + parkReportcount + "件")
+        }
         // ボタンのリスナーを作成
         parkdetailReportbutton.setOnClickListener {
+            var fragment = ReportcommentFragment()
+            var Park_Bundle:Bundle = Bundle()
+            Park_Bundle.putString("id", parkid.toString())
+            Park_Bundle.putString("name", parkname)
+
+            fragment.setArguments(Park_Bundle)
             parentFragmentManager.beginTransaction()
-                //.add(R.id.container,fragment)
-                .replace(R.id.container, ReportcommentFragment())
+                .replace(R.id.container, fragment)
                 .commit()
 
         }
