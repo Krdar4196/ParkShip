@@ -13,24 +13,19 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.google.android.gms.location.*
 import com.google.android.gms.location.LocationCallback
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.*
+import com.google.android.gms.maps.model.*
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import kotlin.properties.Delegates
 
 private val ARR_MAX: Int = 3
 
 class map : Fragment(), OnMapReadyCallback, LocationListener {
-
 
     lateinit var mMap: GoogleMap
 
@@ -46,6 +41,11 @@ class map : Fragment(), OnMapReadyCallback, LocationListener {
     private var Park_ID: ArrayList<String> = ArrayList()
     private var Park_Address: ArrayList<String> = ArrayList()
     private var Park_Name: ArrayList<String> = ArrayList()
+
+    var topLatitude by Delegates.notNull<Double>()
+    var bottomLatitude by Delegates.notNull<Double>()
+    var leftLongitude by Delegates.notNull<Double>()
+    var rightLongitude by Delegates.notNull<Double>()
 
     //公園詳細画面に送るデータ
     private var Park_Bundle: Bundle = Bundle()
@@ -77,9 +77,6 @@ class map : Fragment(), OnMapReadyCallback, LocationListener {
                             val latitude = Park_String.get(0).toDouble()
                             val longitude = Park_String.get(1).toDouble()
                             Park_LatLng.add(LatLng(latitude, longitude))
-                            if (i == ARR_MAX){
-                                MarkerInput()
-                            }
                         }
                     dbdatail.child("$i").get()
                         .addOnSuccessListener {
@@ -93,6 +90,9 @@ class map : Fragment(), OnMapReadyCallback, LocationListener {
 
                             //Log.d("firemap", "metadata : ${it.value!!::class.simpleName}")
                             //Log.d("firemap", "metadata : ${it.value}")
+                            if (i == ARR_MAX){
+                                MarkerInput()
+                            }
                         }
                 }
             }
@@ -118,6 +118,7 @@ class map : Fragment(), OnMapReadyCallback, LocationListener {
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        //mMap.projection.visibleRegion
         val mapFragment =
             childFragmentManager.findFragmentById(R.id.mapView) as SupportMapFragment
         mapFragment.getMapAsync(this)
@@ -130,6 +131,17 @@ class map : Fragment(), OnMapReadyCallback, LocationListener {
 
         //パーミッションの確認
         checkPermission()
+
+        mMap.setOnCameraIdleListener {
+            val proj: Projection = mMap.projection
+            val vRegion: VisibleRegion = proj.visibleRegion
+            topLatitude = vRegion.latLngBounds.northeast.latitude
+            bottomLatitude = vRegion.latLngBounds.southwest.latitude
+            leftLongitude = vRegion.latLngBounds.southwest.longitude
+            rightLongitude = vRegion.latLngBounds.northeast.longitude
+            Log.d("googlemap", "top : $topLatitude, bottom : $bottomLatitude, " +
+                    "left : $leftLongitude, right : $rightLongitude")
+        }
 
         //マーカーの詳細をタップした時の処理
         mMap.setOnInfoWindowClickListener {
@@ -245,10 +257,11 @@ class map : Fragment(), OnMapReadyCallback, LocationListener {
         }
     }
 
-
     fun MarkerInput(){
         for (i in 0..ARR_MAX){
-            mMap.addMarker(MarkerOptions().position(Park_LatLng.get(i)).title("park : $i").snippet("Parkdayo!!!"))
+            val MarkerColor: Float = BitmapDescriptorFactory.HUE_CYAN
+            mMap.addMarker(MarkerOptions().position(Park_LatLng.get(i)).title(Park_Name.get(i)).snippet("Parkdayo!!!")
+                .icon(BitmapDescriptorFactory.defaultMarker(MarkerColor)))
         }
     }
 }
