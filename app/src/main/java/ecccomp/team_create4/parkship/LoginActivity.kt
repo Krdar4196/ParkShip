@@ -42,6 +42,42 @@ class LoginActivity : AppCompatActivity() {
         }
         /*-------------------------------------------------------(ボタン)*/
 
+        /*(ログインボタン)-------------------------------------------------------*/
+        binding.loginButton.setOnClickListener {
+
+            //トースト
+            val msg = "LOGIN"
+            Toast.makeText(applicationContext, msg, Toast.LENGTH_LONG).show()
+            //Run
+            val lo_setOCL  = "LOGIN/ログイン"
+            Log.v(ContentValues.TAG,lo_setOCL)
+
+            //ログイン画面を呼び出すIntentを生成
+            //val intent = Intent(application, LoginActivity::class.java)
+            //Intent呼び出しを実行する
+            //startActivity(intent)
+
+        }
+        /*-------------------------------------------------------(ログインボタン)*/
+
+        /*(ボタン)-------------------------------------------------------*/
+        binding.loginButton.setOnClickListener {
+
+            //トースト
+            val msg = "LOGIN"
+            Toast.makeText(applicationContext, msg, Toast.LENGTH_LONG).show()
+            //Run
+            val lo_setOCL  = "LOGIN/ログイン"
+            Log.v(ContentValues.TAG,lo_setOCL)
+
+            //ログイン画面を呼び出すIntentを生成
+            //val intent = Intent(application, LoginActivity::class.java)
+            //Intent呼び出しを実行する
+            //startActivity(intent)
+
+        }
+        /*-------------------------------------------------------(ボタン)*/
+
         val flag02 = "Stand-By/待機"
         Log.v(ContentValues.TAG,flag02)
 
