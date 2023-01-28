@@ -152,13 +152,15 @@ class map : Fragment(), OnMapReadyCallback, LocationListener {
 
             Log.d("firemap", "click_id : ${it.id.removePrefix("m")}")
 
-            val id = it.id.removePrefix("m")
+            //val id: Int = Integer.parseInt(it.getTag() as String)
 
-            Log.d("firemap", "detail : ${Park_ID.get(id.toInt())}, ${Park_Address.get(id.toInt())}, ${Park_Name.get(id.toInt())}")
 
-            Park_Bundle.putString("id", Park_ID.get(id.toInt()))
-            Park_Bundle.putString("address", Park_Address.get(id.toInt()))
-            Park_Bundle.putString("name", Park_Name.get(id.toInt()))
+            //Log.d("firemap", "detail : ${Park_ID.get(id)}, ${it.snippet}, ${it.title}")
+            Log.d("firemap", "detail : ${it.snippet}, ${it.title}")
+
+            //Park_Bundle.putString("id", Park_ID.get(id))
+            Park_Bundle.putString("address", it.snippet)
+            Park_Bundle.putString("name", it.title)
 
             fragment.setArguments(Park_Bundle)
 
@@ -185,9 +187,16 @@ class map : Fragment(), OnMapReadyCallback, LocationListener {
         for (i in 0..ARR_MAX){
             Park_Marker.add(mMap.addMarker(MarkerOptions().position(Park_LatLng[i]).title(Park_Name[i]).snippet("Parkdayo!!!")
                 .icon(BitmapDescriptorFactory.defaultMarker(MarkerColor)))!!)
+            //Park_Marker[i].setTag(Park_ID[i])
             Park_Marker[i].remove()
         }
-        NowMarkerInput(sbounds)
+        if (::sbounds.isInitialized) NowMarkerInput(sbounds)
+    }
+
+    fun MarkerOutput(i: Int){
+        Park_Marker[i] = mMap.addMarker(MarkerOptions().position(Park_LatLng[i]).title(Park_Name[i]).snippet(Park_Address[i])
+            .icon(BitmapDescriptorFactory.defaultMarker(MarkerColor)))!!
+        //Park_Marker[i].setTag(Park_ID[i])
     }
 
     fun NowMarkerInput(bounds: LatLngBounds){
@@ -195,8 +204,7 @@ class map : Fragment(), OnMapReadyCallback, LocationListener {
             for (i in 0..ARR_MAX){
                 if (bounds.contains(Park_Marker[i].position)) {
                     Log.d("googlemap", "now Marker : ${Park_LatLng[i]}")
-                    Park_Marker[i] = mMap.addMarker(MarkerOptions().position(Park_LatLng[i]).title(Park_Name[i]).snippet("Parkdayo!!!")
-                        .icon(BitmapDescriptorFactory.defaultMarker(MarkerColor)))!!
+                    MarkerOutput(i)
                 }
             }
         }
@@ -208,8 +216,7 @@ class map : Fragment(), OnMapReadyCallback, LocationListener {
                 val marker: Marker = Park_Marker[i]
                 if (sbounds.contains(marker.position) && !(ebounds.contains(marker.position))) {
                     Log.d("googlemap", "add Marker : ${marker.position}")
-                    Park_Marker[i] = mMap.addMarker(MarkerOptions().position(Park_LatLng[i]).title(Park_Name[i]).snippet("Parkdayo!!!")
-                        .icon(BitmapDescriptorFactory.defaultMarker(MarkerColor)))!!
+                    MarkerOutput(i)
                 }else if (!(sbounds.contains(marker.position)) && ebounds.contains(marker.position)){
                     Log.d("googlemap", "del Marker : ${marker.position}")
                     Park_Marker[i].remove()
