@@ -3,6 +3,7 @@ package ecccomp.team_create4.parkship
 import android.Manifest
 import android.content.ContentValues
 import android.content.pm.PackageManager
+import android.graphics.Point
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
@@ -23,7 +24,8 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import kotlin.properties.Delegates
 
-private val ARR_MAX: Int = 3
+private val ARR_MAX: Int = 50
+private val MAX_MARKER: Int = 25
 
 class map : Fragment(), OnMapReadyCallback, LocationListener {
 
@@ -37,18 +39,20 @@ class map : Fragment(), OnMapReadyCallback, LocationListener {
     lateinit var nowLocation: LatLng
     var nowMarker: Marker? = null
 
+    private var Park_Marker: ArrayList<Marker> = ArrayList()
     private var Park_LatLng: ArrayList<LatLng> = ArrayList()
     private var Park_ID: ArrayList<String> = ArrayList()
     private var Park_Address: ArrayList<String> = ArrayList()
     private var Park_Name: ArrayList<String> = ArrayList()
 
-    var topLatitude by Delegates.notNull<Double>()
-    var bottomLatitude by Delegates.notNull<Double>()
-    var leftLongitude by Delegates.notNull<Double>()
-    var rightLongitude by Delegates.notNull<Double>()
-
     //公園詳細画面に送るデータ
     private var Park_Bundle: Bundle = Bundle()
+
+
+
+    lateinit var sbounds: LatLngBounds
+    lateinit var ebounds: LatLngBounds
+    var dbconn_flg: Boolean = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -87,10 +91,10 @@ class map : Fragment(), OnMapReadyCallback, LocationListener {
                             Park_Address.add("${ParkData.get("ksj:pop").toString()} ${ParkData.get("ksj:cop").toString()}")
                             Log.d("firemap", "公園名 : ${ParkData.get("ksj:nop")}")
                             Park_Name.add(ParkData.get("ksj:nop").toString())
-
                             //Log.d("firemap", "metadata : ${it.value!!::class.simpleName}")
                             //Log.d("firemap", "metadata : ${it.value}")
                             if (i == ARR_MAX){
+                                dbconn_flg = true
                                 MarkerInput()
                             }
                         }
@@ -129,18 +133,17 @@ class map : Fragment(), OnMapReadyCallback, LocationListener {
         mMap = googleMap
         mMap.setInfoWindowAdapter(ParkInfoWindow(requireContext()))
 
+        var nowMarker: ArrayList<Marker> = ArrayList()
+
         //パーミッションの確認
         checkPermission()
 
         mMap.setOnCameraIdleListener {
-            val proj: Projection = mMap.projection
-            val vRegion: VisibleRegion = proj.visibleRegion
-            topLatitude = vRegion.latLngBounds.northeast.latitude
-            bottomLatitude = vRegion.latLngBounds.southwest.latitude
-            leftLongitude = vRegion.latLngBounds.southwest.longitude
-            rightLongitude = vRegion.latLngBounds.northeast.longitude
-            Log.d("googlemap", "top : $topLatitude, bottom : $bottomLatitude, " +
-                    "left : $leftLongitude, right : $rightLongitude")
+            nowMarker.clear()
+            if (::sbounds.isInitialized) ebounds = sbounds
+            sbounds = mMap.projection.visibleRegion.latLngBounds
+            Log.d("googlemap", "$sbounds")
+            if(::ebounds.isInitialized) NowMarkerInput(sbounds, ebounds) else NowMarkerInput(sbounds)
         }
 
         //マーカーの詳細をタップした時の処理
@@ -173,6 +176,45 @@ class map : Fragment(), OnMapReadyCallback, LocationListener {
             childFragmentManager.beginTransaction()
                 .replace(R.id.container, fragment)
                 .commit()
+        }
+    }
+
+    val MarkerColor: Float = BitmapDescriptorFactory.HUE_CYAN
+
+    fun MarkerInput(){
+        for (i in 0..ARR_MAX){
+            Park_Marker.add(mMap.addMarker(MarkerOptions().position(Park_LatLng[i]).title(Park_Name[i]).snippet("Parkdayo!!!")
+                .icon(BitmapDescriptorFactory.defaultMarker(MarkerColor)))!!)
+            Park_Marker[i].remove()
+        }
+        NowMarkerInput(sbounds)
+    }
+
+    fun NowMarkerInput(bounds: LatLngBounds){
+        if (dbconn_flg){
+            for (i in 0..ARR_MAX){
+                if (bounds.contains(Park_Marker[i].position)) {
+                    Log.d("googlemap", "now Marker : ${Park_LatLng[i]}")
+                    Park_Marker[i] = mMap.addMarker(MarkerOptions().position(Park_LatLng[i]).title(Park_Name[i]).snippet("Parkdayo!!!")
+                        .icon(BitmapDescriptorFactory.defaultMarker(MarkerColor)))!!
+                }
+            }
+        }
+    }
+
+    fun NowMarkerInput(sbounds: LatLngBounds, ebounds: LatLngBounds){
+        if (dbconn_flg){
+            for (i in 0..ARR_MAX){
+                val marker: Marker = Park_Marker[i]
+                if (sbounds.contains(marker.position) && !(ebounds.contains(marker.position))) {
+                    Log.d("googlemap", "add Marker : ${marker.position}")
+                    Park_Marker[i] = mMap.addMarker(MarkerOptions().position(Park_LatLng[i]).title(Park_Name[i]).snippet("Parkdayo!!!")
+                        .icon(BitmapDescriptorFactory.defaultMarker(MarkerColor)))!!
+                }else if (!(sbounds.contains(marker.position)) && ebounds.contains(marker.position)){
+                    Log.d("googlemap", "del Marker : ${marker.position}")
+                    Park_Marker[i].remove()
+                }
+            }
         }
     }
 
@@ -257,11 +299,4 @@ class map : Fragment(), OnMapReadyCallback, LocationListener {
         }
     }
 
-    fun MarkerInput(){
-        for (i in 0..ARR_MAX){
-            val MarkerColor: Float = BitmapDescriptorFactory.HUE_CYAN
-            mMap.addMarker(MarkerOptions().position(Park_LatLng.get(i)).title(Park_Name.get(i)).snippet("Parkdayo!!!")
-                .icon(BitmapDescriptorFactory.defaultMarker(MarkerColor)))
-        }
-    }
 }
