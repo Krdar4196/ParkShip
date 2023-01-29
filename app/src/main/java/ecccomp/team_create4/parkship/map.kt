@@ -16,15 +16,12 @@ import com.google.android.gms.location.*
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import kotlin.properties.Delegates
 
-private val ARR_MAX: Int = 50
+private val ARR_MAX: Int = 3
 private val MAX_MARKER: Int = 25
 
 class map : Fragment(), OnMapReadyCallback, LocationListener {
@@ -32,6 +29,7 @@ class map : Fragment(), OnMapReadyCallback, LocationListener {
     lateinit var mMap: GoogleMap
 
     private lateinit var database: DatabaseReference
+    private lateinit var dbRef: DatabaseReference
 
     lateinit var fusedLocationProviderClient : FusedLocationProviderClient
     var locationCallback: LocationCallback? = null
@@ -64,6 +62,13 @@ class map : Fragment(), OnMapReadyCallback, LocationListener {
         database = Firebase.database.reference
 
         Log.d("firebase", "onCreate Through#####")
+
+
+        /** DBに通報データを追加するコード
+        dbRef = Firebase.database.getReference("ksj:Dataset")
+        for (i in 0..5111){
+            dbRef.child("elm:Report").child("$i").child("-gml:id").setValue("${i+1}")
+        } **/
 
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -152,10 +157,10 @@ class map : Fragment(), OnMapReadyCallback, LocationListener {
 
             Log.d("firemap", "click_id : ${it.id.removePrefix("m")}")
 
-            //val id: Int = Integer.parseInt(it.getTag() as String)
+            val id: Int = Integer.parseInt(it.getTag() as String)
 
 
-            //Log.d("firemap", "detail : ${Park_ID.get(id)}, ${it.snippet}, ${it.title}")
+            Log.d("firemap", "detail : ${Park_ID.get(id)}, ${it.snippet}, ${it.title}")
             Log.d("firemap", "detail : ${it.snippet}, ${it.title}")
 
             //Park_Bundle.putString("id", Park_ID.get(id))
@@ -196,7 +201,7 @@ class map : Fragment(), OnMapReadyCallback, LocationListener {
     fun MarkerOutput(i: Int){
         Park_Marker[i] = mMap.addMarker(MarkerOptions().position(Park_LatLng[i]).title(Park_Name[i]).snippet(Park_Address[i])
             .icon(BitmapDescriptorFactory.defaultMarker(MarkerColor)))!!
-        //Park_Marker[i].setTag(Park_ID[i])
+        Park_Marker[i].setTag(Park_ID[i])
     }
 
     fun NowMarkerInput(bounds: LatLngBounds){
