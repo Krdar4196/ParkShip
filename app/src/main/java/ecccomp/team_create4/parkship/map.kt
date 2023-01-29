@@ -156,14 +156,10 @@ class map : Fragment(), OnMapReadyCallback, LocationListener {
             var fragment = ParkDetailFragment()
 
             Log.d("firemap", "click_id : ${it.id.removePrefix("m")}")
-
-            val id: Int = Integer.parseInt(it.getTag() as String)
-
-
-            Log.d("firemap", "detail : ${Park_ID.get(id)}, ${it.snippet}, ${it.title}")
-            Log.d("firemap", "detail : ${it.snippet}, ${it.title}")
+            Log.d("firemap", "detail : ${it.tag}, ${it.snippet}, ${it.title}")
 
             //Park_Bundle.putString("id", Park_ID.get(id))
+            Park_Bundle.putString("id", it.tag.toString())
             Park_Bundle.putString("address", it.snippet)
             Park_Bundle.putString("name", it.title)
 
