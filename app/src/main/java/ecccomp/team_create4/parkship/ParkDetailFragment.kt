@@ -51,13 +51,13 @@ class ParkDetailFragment : Fragment() {
         val parkdetailReportbutton: Button = view.findViewById(R.id.parkdetailReportbutton)
 
         val parkdetailbundle = arguments
-        var parkid:Int? = 0
+        var parkid:String? = null
         var parkname:String? = null
         var parkaddress:String? = null
         var parkReportcount:Int? = 1
 
         if (parkdetailbundle != null){
-            parkid = parkdetailbundle.getInt("id")
+            parkid = parkdetailbundle.getString("id")
             parkname = parkdetailbundle.getString("name")
             parkaddress = parkdetailbundle.getString("address")
             parkdetailNametext.setText(parkname)
