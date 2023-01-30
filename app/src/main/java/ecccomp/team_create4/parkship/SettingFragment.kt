@@ -20,6 +20,7 @@ class SettingFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        requireActivity().setTitle("設定")
 
         Account_ID = arguments?.getString("id").toString()
         Account_RP = arguments?.getString("rpcount").toString()

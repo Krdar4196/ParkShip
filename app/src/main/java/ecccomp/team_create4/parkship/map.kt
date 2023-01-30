@@ -61,7 +61,7 @@ class map : Fragment(), OnMapReadyCallback, LocationListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requireActivity().setTitle("Park Map!!!")
+        requireActivity().setTitle("ParkShip")
 
         Account_ID = arguments?.getString("id").toString()
         Account_RP = arguments?.getString("rpcount").toString()
@@ -251,7 +251,7 @@ class map : Fragment(), OnMapReadyCallback, LocationListener {
             in 4..10 -> MarkerColor = MarkerOrange
             else     -> MarkerColor = MarkerRed
         }
-        Park_Marker[i] = mMap.addMarker(MarkerOptions().position(Park_LatLng[i]).title(Park_Name[i]).snippet("${Park_Address[i]}\n\n通報件数 : ${Park_Count[i]}")
+        Park_Marker[i] = mMap.addMarker(MarkerOptions().position(Park_LatLng[i]).title(Park_Name[i]).snippet("${Park_Address[i]}\n通報件数 : ${Park_Count[i]}")
             .icon(BitmapDescriptorFactory.defaultMarker(MarkerColor)))!!
         Park_Marker[i].setTag(Park_ID[i] + " " + Park_Count[i])
     }

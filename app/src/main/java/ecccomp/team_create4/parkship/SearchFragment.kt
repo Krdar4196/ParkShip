@@ -19,6 +19,7 @@ class SearchFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        requireActivity().setTitle("公園検索")
 
         Account_ID = arguments?.getString("id").toString()
         Account_RP = arguments?.getString("rpcount").toString()
