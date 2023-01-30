@@ -21,7 +21,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import kotlin.properties.Delegates
 
-private val ARR_MAX: Int = 3
+private val ARR_MAX: Int = 30
 private val MAX_MARKER: Int = 25
 
 class map : Fragment(), OnMapReadyCallback, LocationListener {
@@ -140,6 +140,19 @@ class map : Fragment(), OnMapReadyCallback, LocationListener {
         }
         database.addValueEventListener(postListener)
 
+        val mkRef: DatabaseReference = Firebase.database.getReference("ksj:Dataset/ksj:Park")
+
+//        mkRef.addValueEventListener(object : ValueEventListener{
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//
+//            }
+//
+//            override fun onCancelled(databaseError: DatabaseError) {
+//                // Getting Post failed, log a message
+//                Log.w(ContentValues.TAG, "loadPost:onCancelled", databaseError.toException())
+//            }
+//        })
+
     }
 
 
@@ -214,7 +227,11 @@ class map : Fragment(), OnMapReadyCallback, LocationListener {
         }
     }
 
-    val MarkerColor: Float = BitmapDescriptorFactory.HUE_CYAN
+    var MarkerColor: Float = BitmapDescriptorFactory.HUE_GREEN
+    val MarkerGreen: Float = BitmapDescriptorFactory.HUE_GREEN          //0
+    val MarkerYellow: Float = BitmapDescriptorFactory.HUE_YELLOW        //1~3
+    val MarkerOrange: Float = BitmapDescriptorFactory.HUE_ORANGE        //4~10
+    val MarkerRed: Float = BitmapDescriptorFactory.HUE_RED              //11~
 
     fun MarkerInput(){
         for (i in 0..ARR_MAX){
@@ -227,6 +244,13 @@ class map : Fragment(), OnMapReadyCallback, LocationListener {
     }
 
     fun MarkerOutput(i: Int){
+        Log.d("markercolor", "count : ${Park_Count[i]}")
+        when (Park_Count[i].toInt()){
+            0        -> MarkerColor = MarkerGreen
+            in 1..3  -> MarkerColor = MarkerYellow
+            in 4..10 -> MarkerColor = MarkerOrange
+            else     -> MarkerColor = MarkerRed
+        }
         Park_Marker[i] = mMap.addMarker(MarkerOptions().position(Park_LatLng[i]).title(Park_Name[i]).snippet(Park_Address[i])
             .icon(BitmapDescriptorFactory.defaultMarker(MarkerColor)))!!
         Park_Marker[i].setTag(Park_ID[i] + " " + Park_Count[i])
