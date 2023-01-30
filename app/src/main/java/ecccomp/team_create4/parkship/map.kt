@@ -30,6 +30,7 @@ class map : Fragment(), OnMapReadyCallback, LocationListener {
 
     private lateinit var database: DatabaseReference
     private lateinit var dbRef: DatabaseReference
+    private lateinit var rpRef: DatabaseReference
 
     lateinit var fusedLocationProviderClient : FusedLocationProviderClient
     var locationCallback: LocationCallback? = null
@@ -42,6 +43,7 @@ class map : Fragment(), OnMapReadyCallback, LocationListener {
     private var Park_ID: ArrayList<String> = ArrayList()
     private var Park_Address: ArrayList<String> = ArrayList()
     private var Park_Name: ArrayList<String> = ArrayList()
+    private var Park_Count: ArrayList<String> = ArrayList()
 
     //公園詳細画面に送るデータ
     private var Park_Bundle: Bundle = Bundle()
@@ -70,15 +72,24 @@ class map : Fragment(), OnMapReadyCallback, LocationListener {
             dbRef.child("elm:Report").child("$i").child("-gml:id").setValue("${i+1}")
         } **/
 
+        /** DBに通報数カウントデータを追加するコード
+        rpRef = Firebase.database.getReference("ksj:Dataset/elm:Report")
+        for (i in 0..5111){
+            rpRef = Firebase.database.getReference("ksj:Dataset/ksj:Park/${i}")
+            rpRef.child("count").setValue(0)
+        } **/
+
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 // Get Post object and use the values to update the UI
                 val post = dataSnapshot.value
 
+                val dbreport = database.child("ksj:Dataset").child("elm:Report")
                 val dbdata = database.child("ksj:Dataset").child("gml:Point")
                 val dbdatail = database.child("ksj:Dataset").child("ksj:Park")
 
                 for (i in 0..ARR_MAX){
+                    dbreport.child("$i")
                     dbdata.child("$i").child("gml:pos").get()
                         .addOnSuccessListener {
                             val ltString = it.value as String
@@ -96,6 +107,7 @@ class map : Fragment(), OnMapReadyCallback, LocationListener {
                             Park_Address.add("${ParkData.get("ksj:pop").toString()} ${ParkData.get("ksj:cop").toString()}")
                             Log.d("firemap", "公園名 : ${ParkData.get("ksj:nop")}")
                             Park_Name.add(ParkData.get("ksj:nop").toString())
+                            Park_Count.add(ParkData.get("count").toString())
                             //Log.d("firemap", "metadata : ${it.value!!::class.simpleName}")
                             //Log.d("firemap", "metadata : ${it.value}")
                             if (i == ARR_MAX){
@@ -156,16 +168,15 @@ class map : Fragment(), OnMapReadyCallback, LocationListener {
             var fragment = ParkDetailFragment()
 
             Log.d("firemap", "click_id : ${it.id.removePrefix("m")}")
+            Log.d("firemap", "detail : ${it.tag}, ${it.snippet}, ${it.title}")
 
-            val id: Int = Integer.parseInt(it.getTag() as String)
-
-
-            Log.d("firemap", "detail : ${Park_ID.get(id)}, ${it.snippet}, ${it.title}")
-            Log.d("firemap", "detail : ${it.snippet}, ${it.title}")
+            val Park_Tag = it.tag.toString().split(" ") as ArrayList<String>
 
             //Park_Bundle.putString("id", Park_ID.get(id))
+            Park_Bundle.putString("id", Park_Tag[0])
             Park_Bundle.putString("address", it.snippet)
             Park_Bundle.putString("name", it.title)
+            Park_Bundle.putString("count", Park_Tag[1])
 
             fragment.setArguments(Park_Bundle)
 
@@ -201,7 +212,7 @@ class map : Fragment(), OnMapReadyCallback, LocationListener {
     fun MarkerOutput(i: Int){
         Park_Marker[i] = mMap.addMarker(MarkerOptions().position(Park_LatLng[i]).title(Park_Name[i]).snippet(Park_Address[i])
             .icon(BitmapDescriptorFactory.defaultMarker(MarkerColor)))!!
-        Park_Marker[i].setTag(Park_ID[i])
+        Park_Marker[i].setTag(Park_ID[i] + " " + Park_Count[i])
     }
 
     fun NowMarkerInput(bounds: LatLngBounds){
