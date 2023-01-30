@@ -1,14 +1,19 @@
 package ecccomp.team_create4.parkship
 
+import android.content.ContentValues
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import androidx.fragment.app.Fragment
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import kotlin.properties.Delegates
@@ -85,6 +90,29 @@ class MainActivity : AppCompatActivity() {
         acRef.child("usr:Account").child("0").child("name").setValue("井石太郎")
         acRef.child("usr:Account").child("0").child("pass").setValue("123qwecc")
         acRef.child("usr:Account").child("0").child("friend").child("0").setValue("1") **/
+
+        acRef.addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                acRef.child("usr:Account").child("0").child("id").get()
+                    .addOnSuccessListener { id ->
+                        acRef.child("usr:Account").child("0").child("rpcount").get()
+                            .addOnSuccessListener { count ->
+                                acid = id.value.toString()
+                                rpcount = count.value.toString()
+
+                                Log.d("dtchange", "$acid")
+                                Log.d("dtchange", "$rpcount")
+
+                                AC_Bundle.putString("id", acid)
+                                AC_Bundle.putString("rpcount", rpcount)
+                            }
+                    }
+            }
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Getting Post failed, log a message
+                Log.w(ContentValues.TAG, "loadPost:onCancelled", databaseError.toException())
+            }
+        })
 
         acRef.child("usr:Account").child("0").child("id").get()
             .addOnSuccessListener { id ->

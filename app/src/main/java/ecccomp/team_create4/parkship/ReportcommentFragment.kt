@@ -69,10 +69,12 @@ class ReportcommentFragment : Fragment() {
 
             //公園に通報情報を追加する
             rpRef.child("count").setValue("${count?.plus(1)}")
+            rpRef.child("elm:rpt").child("$parkcount").child("comment_id").setValue("${count?.plus(1)}")
             rpRef.child("elm:rpt").child("$parkcount").child("account_id").setValue("${account}")
             rpRef.child("elm:rpt").child("$parkcount").child("comment").setValue("${reportEdit.text}")
 
             //アカウントに通報情報を追加する
+            acRef.child("report").child("${rpcount}").child("comment_id").setValue("${count?.plus(1)}")
             acRef.child("report").child("${rpcount}").child("park_id").setValue("$parkid")
             acRef.child("rpcount").setValue("${rpcount?.plus(1)}")
 
