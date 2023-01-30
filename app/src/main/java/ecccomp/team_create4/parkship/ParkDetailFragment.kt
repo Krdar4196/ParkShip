@@ -36,7 +36,7 @@ class ParkDetailFragment : Fragment() {
 
         val parkdetailNametext: TextView = view.findViewById(R.id.parkdetailNametext)
         val parkdetailAddresstext: TextView = view.findViewById(R.id.parkdetailAddresstext)
-        val parkdetailReporttext: TextView = view.findViewById(R.id.parkdetailReporttext)
+        //val parkdetailReporttext: TextView = view.findViewById(R.id.parkdetailReporttext)
         val parkdetailReportbutton: Button = view.findViewById(R.id.parkdetailReportbutton)
 
         val parkdetailbundle = arguments
@@ -60,7 +60,7 @@ class ParkDetailFragment : Fragment() {
 
             parkdetailNametext.setText(parkname)
             parkdetailAddresstext.setText("住所:" + parkaddress)
-            parkdetailReporttext.setText("通報件数:" + parkReportcount + "件")
+            //parkdetailReporttext.setText("通報件数:" + parkReportcount + "件")
         }
         // ボタンのリスナーを作成
         parkdetailReportbutton.setOnClickListener {
