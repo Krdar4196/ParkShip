@@ -21,7 +21,7 @@
             android:layout_height="100dp"
             android:layout_gravity="center"
             android:layout_marginTop="40dp"
-            app:cardBackgroundColor="@color/gray"
+            app:cardBackgroundColor="#77bb33"
             app:cardCornerRadius="50dp"
             app:cardElevation="0dp">
 
@@ -41,7 +41,7 @@
             android:id="@+id/icon_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Guest_4196"
+            android:text=""
             android:textSize="20dp"
             android:layout_marginTop="10dp"
             android:layout_gravity="center"
@@ -71,23 +71,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/icon_layout"/>
 
-        <ScrollView
-            android:id="@+id/report_history"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/report_histories"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:isScrollContainer="false"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/report_history_label">
-
-            <TextView
-                android:id="@+id/report_history_text"
-                android:text="通報 : "
-                android:layout_marginStart="30dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-        </ScrollView>
+            android:layout_height="490dp"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
