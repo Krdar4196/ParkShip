@@ -46,7 +46,6 @@ class map : Fragment(), OnMapReadyCallback, LocationListener {
     private var Park_Count: ArrayList<String> = ArrayList()
 
     //MainActivityからユーザ情報を取得するデータ
-    private var Account_Bundle = arguments
     lateinit var Account_ID: String
     lateinit var Account_RP: String
 

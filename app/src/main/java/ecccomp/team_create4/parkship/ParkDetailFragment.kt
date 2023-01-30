@@ -55,6 +55,8 @@ class ParkDetailFragment : Fragment() {
             parkaddress = parkdetailbundle.getString("address")
             parkReportcount = parkdetailbundle.getString("count")
 
+            Log.d("account", "$parkid, $parkname")
+
 
             parkdetailNametext.setText(parkname)
             parkdetailAddresstext.setText("住所:" + parkaddress)
