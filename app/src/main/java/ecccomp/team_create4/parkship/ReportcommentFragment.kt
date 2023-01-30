@@ -24,7 +24,6 @@ class ReportcommentFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activity?.supportFragmentManager?.popBackStack()
     }
 
     override fun onCreateView(
@@ -43,11 +42,15 @@ class ReportcommentFragment : Fragment() {
         val reportEdit : EditText = view.findViewById(R.id.reportcommentReportcontentEdittext)
 
         val parkreportcommentbundle = arguments
+        var account:Int? = 0
+        var rpcount:Int? = 0
         var parkid:Int? = 0
         var parkname:String? = null
         var parkcount:String? = null
 
         if (parkreportcommentbundle != null){
+            account = parkreportcommentbundle.getString("account")?.toInt()
+            rpcount = parkreportcommentbundle.getString("rpcount")?.toInt()
             parkid = parkreportcommentbundle.getString("id")?.toInt()
             parkname = parkreportcommentbundle.getString("name")
             parkcount = parkreportcommentbundle.getString("count")
@@ -60,12 +63,18 @@ class ReportcommentFragment : Fragment() {
             val database = Firebase.database.reference
             val dpRef: DatabaseReference = Firebase.database.getReference("ksj:Dataset/")
             val rpRef: DatabaseReference = Firebase.database.getReference("ksj:Dataset/ksj:Park/${parkid!!-1}")
+            val acRef: DatabaseReference = Firebase.database.getReference("ksj:Dataset/usr:Account/${account!!-1}")
 
             val count = parkcount?.toInt()
 
-            rpRef.child("count").setValue(count?.plus(1))
+            //公園に通報情報を追加する
+            rpRef.child("count").setValue("${count?.plus(1)}")
+            rpRef.child("elm:rpt").child("$parkcount").child("account_id").setValue("${account}")
             rpRef.child("elm:rpt").child("$parkcount").child("comment").setValue("${reportEdit.text}")
 
+            //アカウントに通報情報を追加する
+            acRef.child("report").child("${rpcount}").child("park_id").setValue("$parkid")
+            acRef.child("rpcount").setValue("${rpcount?.plus(1)}")
 
             Log.d("detail", "${reportEdit.text}")
             val toast = Toast.makeText(requireActivity(), "送信しました。${reportEdit.text}", Toast.LENGTH_LONG)
@@ -73,7 +82,9 @@ class ReportcommentFragment : Fragment() {
             reportEdit.setText("")
             toast.show()
 
-            activity?.supportFragmentManager?.popBackStack()
+            reportcommentReportbutton.setEnabled(false)
+            reportEdit.setEnabled(false)
+            //activity?.supportFragmentManager?.popBackStack()
         }
     }
 }

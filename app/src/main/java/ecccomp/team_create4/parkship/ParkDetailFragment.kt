@@ -40,12 +40,16 @@ class ParkDetailFragment : Fragment() {
         val parkdetailReportbutton: Button = view.findViewById(R.id.parkdetailReportbutton)
 
         val parkdetailbundle = arguments
+        var account:String? = null
+        var rpcount:String? = null
         var parkid:String? = null
         var parkname:String? = null
         var parkaddress:String? = null
         var parkReportcount:String? = null
 
         if (parkdetailbundle != null){
+            account = parkdetailbundle.getString("account")
+            rpcount = parkdetailbundle.getString("rpcount")
             parkid = parkdetailbundle.getString("id")
             parkname = parkdetailbundle.getString("name")
             parkaddress = parkdetailbundle.getString("address")
@@ -63,6 +67,8 @@ class ParkDetailFragment : Fragment() {
 
             Log.d("detail", "report detail : $parkid, $parkname")
 
+            Park_Bundle.putString("account", account)
+            Park_Bundle.putString("rpcount", rpcount)
             Park_Bundle.putString("id", parkid.toString())
             Park_Bundle.putString("name", parkname)
             Park_Bundle.putString("count", parkReportcount)

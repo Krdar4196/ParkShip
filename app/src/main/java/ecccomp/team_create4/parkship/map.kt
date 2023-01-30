@@ -45,6 +45,11 @@ class map : Fragment(), OnMapReadyCallback, LocationListener {
     private var Park_Name: ArrayList<String> = ArrayList()
     private var Park_Count: ArrayList<String> = ArrayList()
 
+    //MainActivityからユーザ情報を取得するデータ
+    private var Account_Bundle = arguments
+    lateinit var Account_ID: String
+    lateinit var Account_RP: String
+
     //公園詳細画面に送るデータ
     private var Park_Bundle: Bundle = Bundle()
 
@@ -58,6 +63,11 @@ class map : Fragment(), OnMapReadyCallback, LocationListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requireActivity().setTitle("Park Map!!!")
+
+        Account_ID = arguments?.getString("id").toString()
+        Account_RP = arguments?.getString("rpcount").toString()
+        Log.d("account", "account id : $Account_ID")
+        Log.d("account", "account rp : $Account_RP")
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())
 
@@ -76,20 +86,28 @@ class map : Fragment(), OnMapReadyCallback, LocationListener {
         rpRef = Firebase.database.getReference("ksj:Dataset/elm:Report")
         for (i in 0..5111){
             rpRef = Firebase.database.getReference("ksj:Dataset/ksj:Park/${i}")
-            rpRef.child("count").setValue(0)
+            rpRef.child("count").setValue("0")
         } **/
+
+        /** アカウントを追加するコード
+        val acRef: DatabaseReference = Firebase.database.getReference("ksj:Dataset")
+        acRef.child("usr:Account").child("0").child("id").setValue("1")
+        acRef.child("usr:Account").child("0").child("rpcount").setValue("0")
+        acRef.child("usr:Account").child("0").child("name").setValue("井石太郎")
+        acRef.child("usr:Account").child("0").child("pass").setValue("123qwecc")
+        acRef.child("usr:Account").child("0").child("friend").child("0").setValue("1") **/
+
+
 
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 // Get Post object and use the values to update the UI
                 val post = dataSnapshot.value
 
-                val dbreport = database.child("ksj:Dataset").child("elm:Report")
                 val dbdata = database.child("ksj:Dataset").child("gml:Point")
                 val dbdatail = database.child("ksj:Dataset").child("ksj:Park")
 
                 for (i in 0..ARR_MAX){
-                    dbreport.child("$i")
                     dbdata.child("$i").child("gml:pos").get()
                         .addOnSuccessListener {
                             val ltString = it.value as String
@@ -108,8 +126,6 @@ class map : Fragment(), OnMapReadyCallback, LocationListener {
                             Log.d("firemap", "公園名 : ${ParkData.get("ksj:nop")}")
                             Park_Name.add(ParkData.get("ksj:nop").toString())
                             Park_Count.add(ParkData.get("count").toString())
-                            //Log.d("firemap", "metadata : ${it.value!!::class.simpleName}")
-                            //Log.d("firemap", "metadata : ${it.value}")
                             if (i == ARR_MAX){
                                 dbconn_flg = true
                                 MarkerInput()
@@ -173,6 +189,8 @@ class map : Fragment(), OnMapReadyCallback, LocationListener {
             val Park_Tag = it.tag.toString().split(" ") as ArrayList<String>
 
             //Park_Bundle.putString("id", Park_ID.get(id))
+            Park_Bundle.putString("account", Account_ID)
+            Park_Bundle.putString("rpcount", Account_RP)
             Park_Bundle.putString("id", Park_Tag[0])
             Park_Bundle.putString("address", it.snippet)
             Park_Bundle.putString("name", it.title)
