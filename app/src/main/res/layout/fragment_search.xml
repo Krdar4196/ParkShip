@@ -29,12 +29,14 @@
                 android:id="@+id/searchresetButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorDarkGreen"
                 android:layout_gravity="right"
                 android:text="@string/searchResetbuttontext"/>
             <Button
                 android:id="@+id/searchdecisionButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorDarkGreen"
                 android:layout_gravity="right"
                 android:text="@string/searchDecisionbuttontext"/>
         </LinearLayout>

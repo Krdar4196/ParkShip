@@ -28,6 +28,7 @@
                 android:id="@+id/parkdetailReportbutton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorDarkGreen"
                 android:layout_gravity="right"
                 android:text="@string/parkdetailReportbuttontext" />
         </LinearLayout>
