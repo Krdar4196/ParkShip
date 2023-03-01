@@ -1,32 +1,45 @@
 package ecccomp.team_create4.parkship
 
+import android.content.ClipData
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [MyPageFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class MyPageFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    //MainActivityからユーザ情報を取得するデータ
+    lateinit var Account_ID: String
+    lateinit var Account_RP: String
+    lateinit var Account_Name: String
+
+    private lateinit var database: DatabaseReference
+
+    lateinit var acRef: DatabaseReference
+    lateinit var pkRef: DatabaseReference
+
+    private lateinit var recyclerView: RecyclerView
+
+    var Report_ID: ArrayList<String> = ArrayList()
+    var Park_Name: ArrayList<String> = ArrayList()
+    var Comment: ArrayList<String> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
+        Account_ID = arguments?.getString("id").toString()
+        Account_RP = arguments?.getString("rpcount").toString()
+        Log.d("account", "account id : $Account_ID")
+        Log.d("account", "account rp : $Account_RP")
+
     }
 
     override fun onCreateView(
@@ -37,23 +50,52 @@ class MyPageFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_my_page, container, false)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment MyPageFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MyPageFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val icon_name: TextView = view.findViewById(R.id.icon_name)
+
+        database = Firebase.database.reference
+        acRef = Firebase.database.getReference("ksj:Dataset/usr:Account/${Account_ID.toInt()-1}")
+        pkRef = Firebase.database.getReference("ksj:Dataset/ksj:Park")
+        acRef.child("name").get()
+            .addOnSuccessListener {
+                icon_name.setText(it.value.toString())
+            }.addOnCanceledListener {
+                icon_name.setText("Guest_4196")
             }
+
+        var items: MutableList<ClipData.Item> = mutableListOf()
+
+        for (i in 0..Account_RP.toInt()-1){
+            acRef.child("report").child("$i").child("park_id").get()
+                .addOnSuccessListener { pid ->
+                acRef.child("report").child("$i").child("comment_id").get()
+                    .addOnSuccessListener { cid ->
+                        Log.d("account", "${pid.value}")
+                        pkRef.child("${Integer.parseInt(pid.value.toString())-1}").child("ksj:nop").get()
+                            .addOnSuccessListener { pname ->
+                                pkRef.child("${Integer.parseInt(pid.value.toString())-1}").child("elm:rpt")
+                                    .child("${Integer.parseInt(cid.value.toString())-1}").child("comment").get()
+                                    .addOnSuccessListener { comt ->
+                                        Park_Name.add(pname.value.toString())
+                                        Comment.add(comt.value.toString())
+                                        items.add(ClipData.Item("公園名 : ${Park_Name[i]}", "コメント : ${Comment[i]}"))
+
+                                        if (i == Account_RP.toInt()-1){
+                                            recyclerView = view.findViewById(R.id.report_histories)
+                                            recyclerView.adapter = MyPageRecyclerAdapter(items)
+                                            recyclerView.layoutManager = LinearLayoutManager(activity)
+                                        }
+                                    }
+                            }
+                    }
+                }
+        }
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        setHasOptionsMenu(true)
+        requireActivity().title = "マイページ"
     }
 }

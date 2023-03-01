@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "269591418943",
+    "firebase_url": "https://parkship-49074-default-rtdb.firebaseio.com",
+    "project_id": "parkship-49074",
+    "storage_bucket": "parkship-49074.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:269591418943:android:b0808c7878f92f6a6a808a",
+        "android_client_info": {
+          "package_name": "ecccomp.team_create4.parkship"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "269591418943-5703gvt9sb5mroi55rdo0t43r99uv6kt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXEFj5reO4rlLbfg9z-YUIo9h45P5rnRA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "269591418943-5703gvt9sb5mroi55rdo0t43r99uv6kt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

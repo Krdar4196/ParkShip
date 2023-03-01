@@ -4,25 +4,31 @@
     <item
         android:id="@+id/menu1"
         android:enabled="true"
-        android:icon="@drawable/common_google_signin_btn_icon_dark"
+        android:icon="@drawable/map"
         app:showAsAction="ifRoom"
         android:title="マップ"/>
     <item
         android:id="@+id/menu2"
         android:enabled="true"
-        android:icon="@drawable/ic_launcher_background"
+        android:icon="@drawable/search"
         app:showAsAction="ifRoom"
         android:title="検索"/>
     <item
         android:id="@+id/menu3"
         android:enabled="true"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:icon="@drawable/mypage"
         app:showAsAction="ifRoom"
-        android:title="フレンド"/>
+        android:title="マイページ"/>
     <item
         android:id="@+id/menu4"
         android:enabled="true"
-        android:icon="@color/design_default_color_secondary_variant"
+        android:icon="@drawable/friend"
+        app:showAsAction="ifRoom"
+        android:title="フレンド"/>
+    <item
+        android:id="@+id/menu5"
+        android:enabled="true"
+        android:icon="@drawable/configuration"
         app:showAsAction="ifRoom"
         android:title="設定"/>
 
